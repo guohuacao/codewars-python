@@ -1,17 +1,51 @@
-import numpy as np
-def process(string)
+#import numpy as np
+def process(string):
     #build dictionary with "city" "list of int:rainfall", return dictionary
-    rainData = dist()
+    rainData = dict()
     lines = string.split('\n')
-    for line in lines;
+
+    for line in lines:
+        rf = []
         name = line.split(':')[0]
-        print name
-        #temp = line.split(':')[0]
-        #print temp
+        #print (name)
+        temp = line.split(':')[1]
+        #print (temp)
+        items = temp.split(',')
+        for item in items:
+            temperature = float(item.split(' ')[1])
+            rf.append(temperature)
+        rainData[name] = rf
+    return (rainData)
+
 def mean(town, strng):
-    # list of mean,
+    rD = process(strng)
+    try:
+        rf = rD[town]
+        total = 0
+        for i in rf:
+            total +=i
+        #print (total/len(rf))
+        return (total/len(rf))
+    except KeyError:
+        return -1
+
+
 def variance(town, strng):
-    # your code
+    #aver = mean(town, strng)
+    rD = process(strng)
+    try:
+        rf = rD[town]
+        total = 0
+        for i in rf:
+            total +=i
+        aver = (total/len(rf))
+        temp = 0
+        for j in rf:
+            temp += (j - aver)**2
+        #print (temp/len(rf))
+        return temp/len(rf)
+    except KeyError:
+        return -1
 
 
 data = """Rome:Jan 81.2,Feb 63.2,Mar 70.3,Apr 55.7,May 53.0,Jun 36.4,Jul 17.5,Aug 27.5,Sep 60.9,Oct 117.7,Nov 111.0,Dec 97.9
@@ -26,3 +60,6 @@ Beijing:Jan 3.9,Feb 4.7,Mar 8.2,Apr 18.4,May 33.0,Jun 78.1,Jul 224.3,Aug 170.0,S
 Lima:Jan 1.2,Feb 0.9,Mar 0.7,Apr 0.4,May 0.6,Jun 1.8,Jul 4.4,Aug 3.1,Sep 3.3,Oct 1.7,Nov 0.5,Dec 0.7"""
 
 process(data)
+mean("London", data)
+mean("redwood", data)
+variance("London", data)
